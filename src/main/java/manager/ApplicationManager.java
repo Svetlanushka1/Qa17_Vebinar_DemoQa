@@ -14,7 +14,7 @@ public class ApplicationManager {
     HelperStudentForm studentForm;
     public void init(){
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("load-extension=/Users/tayahatum/Tools/5.0.2_0");
+        options.addArguments("load-extension=C:\\tools\\5.3.2_0");//C:\tools\5.3.2_0
         wd =new ChromeDriver(options);
 
 
