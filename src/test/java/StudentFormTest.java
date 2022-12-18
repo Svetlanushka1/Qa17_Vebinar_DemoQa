@@ -19,8 +19,8 @@ public class StudentFormTest extends TestBase{
                 .gender("Male")
                 .phone("12121234567")
                 .birthday("30 June 2000")
-                .subject("Math")
-                .hobbies("Sport")
+                .subject("Math,Chemistry")
+                .hobbies("Sports,Music")
                 .address("Tel Aviv")
                 .state("NCR")
                 .city("Gurgaon").build();
