@@ -1,10 +1,7 @@
 package manager;
 
 import models.Student;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
@@ -32,8 +29,30 @@ public class HelperStudentForm extends HelperBase{
         selectBDay(student.getBirthday());
         addSubjects(student.getSubject());
         selectHobby(student.getHobbies());
+        type(By.id("currentAddress"),student.getAddress());
+        typeState(student.getState());
+        typeCity(student.getCity());
 
 
+    }
+
+    private void typeCity(String city) {
+        //type(By.id("react-select-4-input"),city);
+        wd.findElement(By.id("react-select-4-input")).sendKeys(city);
+        wd.findElement(By.id("react-select-4-input")).sendKeys(Keys.ENTER);
+    }
+
+    private void typeState(String state) {
+        Dimension dimension = wd.manage().window().getSize();
+        System.out.printf("Height --->" + dimension.getHeight());
+
+
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript("window.scrollBy(0,400);");
+
+       // type(By.id("react-select-3-input"),state);
+        wd.findElement(By.id("react-select-3-input")).sendKeys(state);
+        wd.findElement(By.id("react-select-3-input")).sendKeys(Keys.ENTER);
     }
 
     private void selectHobby(String hobbies) {
@@ -55,20 +74,21 @@ public class HelperStudentForm extends HelperBase{
     }
 
     private void addSubjects(String subject) {
-        String []all = new String[0];
+
         if(subject!=null) {
-             all = subject.split(",");
+
+            String []all = subject.split(",");
+
+            click(By.id("subjectsInput"));
+
+            for (String sub : all) {
+                WebElement el = wd.findElement(By.id("subjectsInput"));
+                el.sendKeys(sub);
+                el.sendKeys(Keys.ENTER);
+                pause(1000);
+
+            }
         }
-        click(By.id("subjectsInput"));
-
-        for (String sub:all){
-            WebElement el = wd.findElement(By.id("subjectsInput"));
-            el.sendKeys(sub);
-            el.sendKeys(Keys.ENTER);
-            pause(1000);
-
-        }
-
 
     }
 
@@ -123,5 +143,19 @@ public class HelperStudentForm extends HelperBase{
         }else if (gender.equals("Other")){
             click(By.cssSelector("label[for='gender-radio-3']"));
         }
+    }
+
+    public void uploadPhoto(String link) {
+        wd.findElement(By.id("uploadPicture")).sendKeys(link);
+
+    }
+
+    public void submitForm() {
+        click(By.id("submit"));
+    }
+
+    public void hideFooter() {
+        JavascriptExecutor js =(JavascriptExecutor) wd;
+        js.executeScript("document.querySelector('footer').style.display='none';");
     }
 }

@@ -8,6 +8,7 @@ public class StudentFormTest extends TestBase{
     public void preCondition(){
         app.studentForm().selectItemForms();
         app.studentForm().selectPracticeForm();
+        app.studentForm().hideFooter();
     }
 
     @Test
@@ -27,6 +28,8 @@ public class StudentFormTest extends TestBase{
 
 
         app.studentForm().fillStudentForm(student);
+        app.studentForm().uploadPhoto("/Users/tayahatum/Qa17/Qa17_Vebinar_DemoQa/src/test/resources/boy.png");
+        app.studentForm().submitForm();
 
     }
 }
