@@ -8,6 +8,7 @@ public class StudentFormTest extends TestBase{
     public void preCondition(){
         app.studentForm().selectItemForms();
         app.studentForm().selectPracticeForm();
+        app.studentForm().hideFooter();
     }
 
     @Test
@@ -19,14 +20,16 @@ public class StudentFormTest extends TestBase{
                 .gender("Male")
                 .phone("12121234567")
                 .birthday("30 June 2000")
-                .subject("Math")
-                .hobbies("Sport")
+                .subject("Math,Chemistry")
+                .hobbies("Sports,Music")
                 .address("Tel Aviv")
                 .state("NCR")
                 .city("Gurgaon").build();
 
 
         app.studentForm().fillStudentForm(student);
+        app.studentForm().uploadPhoto("/Users/tayahatum/Qa17/Qa17_Vebinar_DemoQa/src/test/resources/boy.png");
+        app.studentForm().submitForm();
 
     }
 }
