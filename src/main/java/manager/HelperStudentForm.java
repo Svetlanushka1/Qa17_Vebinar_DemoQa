@@ -57,7 +57,7 @@ public class HelperStudentForm extends HelperBase{
 
     private void selectHobby(String hobbies) {
         // label[for='hobbies-checkbox-1']
-        String []all = hobbies.split(",");
+        String []all = hobbies.split(";");
         for (String s:all){
             switch (s){
                 case "Sports":
@@ -77,7 +77,7 @@ public class HelperStudentForm extends HelperBase{
 
         if(subject!=null) {
 
-            String []all = subject.split(",");
+            String []all = subject.split(";");
 
             click(By.id("subjectsInput"));
 
@@ -157,5 +157,9 @@ public class HelperStudentForm extends HelperBase{
     public void hideFooter() {
         JavascriptExecutor js =(JavascriptExecutor) wd;
         js.executeScript("document.querySelector('footer').style.display='none';");
+    }
+
+    public void close() {
+        click(By.id("closeLargeModal"));
     }
 }
