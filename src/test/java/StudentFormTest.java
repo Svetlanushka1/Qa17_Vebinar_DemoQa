@@ -6,7 +6,9 @@ public class StudentFormTest extends TestBase{
 
     @BeforeMethod
     public void preCondition(){
+       // app.studentForm().pause(2000);
         app.studentForm().selectItemForms();
+        //app.studentForm().pause(2000);
         app.studentForm().selectPracticeForm();
     }
 
@@ -19,8 +21,8 @@ public class StudentFormTest extends TestBase{
                 .gender("Male")
                 .phone("12121234567")
                 .birthday("30 June 2000")
-                .subject("Math")
-                .hobbies("Sport")
+                .subject("Math,Chemistry")
+                .hobbies("Sports,Music")
                 .address("Tel Aviv")
                 .state("NCR")
                 .city("Gurgaon").build();
