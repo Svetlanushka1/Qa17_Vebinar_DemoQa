@@ -1,19 +1,23 @@
 import manager.ApplicationManager;
-import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.util.Random;
+
 public class TestBase {
 
-    static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+    static ApplicationManager app = new ApplicationManager();
 
     @BeforeSuite
-    public void setUp() {
+    public void setUp(){
+       // ApplicationManager app = new ApplicationManager();
+
         app.init();
     }
 
     @AfterSuite
-    public void tearDown() {
+    public void tearDown(){
         app.stop();
     }
+
 }

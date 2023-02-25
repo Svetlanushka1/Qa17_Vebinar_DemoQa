@@ -12,24 +12,11 @@ public class HelperStudentForm extends HelperBase{
     }
 
     public void selectItemForms() {
-        JavascriptExecutor js = (JavascriptExecutor) wd;
-        js.executeScript("document.querySelector('body > div:nth-child(6) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3)').click();");
-        //click(By.xpath("//div[@class='category-cards']/div[2]"));
-
+        click(By.xpath("//div[@class='category-cards']/div[2]"));
     }
 
     public void selectPracticeForm() {
         click(By.xpath("//span[text()='Practice Form']"));
-        app.studentForm().hideFooter();
-    }
-    public void hideFooter(){
-        JavascriptExecutor js = (JavascriptExecutor) wd;
-        js.executeScript("document.querySelector('footer').style.display='none';");
-
-    }
-    private void scrollDown(){
-
-
     }
 
     public void fillStudentForm(Student student) {
@@ -42,27 +29,35 @@ public class HelperStudentForm extends HelperBase{
         selectBDay(student.getBirthday());
         addSubjects(student.getSubject());
         selectHobby(student.getHobbies());
-        typeState(student.getAddress());
+        type(By.id("currentAddress"),student.getAddress());
+        typeState(student.getState());
         typeCity(student.getCity());
 
-       // app.studentForm().fillStudentForm();
-       // app.studentForm().uploadPhoto("");
-       // app.studentForm().submit(By.id("submit"));
-
-
-    }
-
-    private void typeState(String state) {
 
     }
 
     private void typeCity(String city) {
+        //type(By.id("react-select-4-input"),city);
+        wd.findElement(By.id("react-select-4-input")).sendKeys(city);
+        wd.findElement(By.id("react-select-4-input")).sendKeys(Keys.ENTER);
+    }
 
+    private void typeState(String state) {
+        Dimension dimension = wd.manage().window().getSize();
+        System.out.printf("Height --->" + dimension.getHeight());
+
+
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript("window.scrollBy(0,400);");
+
+       // type(By.id("react-select-3-input"),state);
+        wd.findElement(By.id("react-select-3-input")).sendKeys(state);
+        wd.findElement(By.id("react-select-3-input")).sendKeys(Keys.ENTER);
     }
 
     private void selectHobby(String hobbies) {
         // label[for='hobbies-checkbox-1']
-        String []all = hobbies.split(",");
+        String []all = hobbies.split(";");
         for (String s:all){
             switch (s){
                 case "Sports":
@@ -79,30 +74,27 @@ public class HelperStudentForm extends HelperBase{
     }
 
     private void addSubjects(String subject) {
-        String []all = new String[0];
-       // if(subject!=null) {
-       //     all = subject.split(",");}
-        click(By.id("subjectsInput"));
 
-        for (String sub:all){
-            //JavascriptExecutor js = (JavascriptExecutor) wd;
-           //js.executeScript("document.querySelector('.subjects-auto-complete__value-container.subjects-auto-complete__value-container--is-multi.css-1hwfws3').sendKeys(Keys.ENTER);");
-            WebElement el = wd.findElement(By.id("subjectsInput"));
-           el.sendKeys(sub);
-           el.sendKeys(Keys.ENTER);
-            pause(1000);
+        if(subject!=null) {
 
+            String []all = subject.split(";");
+
+            click(By.id("subjectsInput"));
+
+            for (String sub : all) {
+                WebElement el = wd.findElement(By.id("subjectsInput"));
+                el.sendKeys(sub);
+                el.sendKeys(Keys.ENTER);
+                pause(1000);
+
+            }
         }
-
 
     }
 
-    private void selectBDay(String birthday) { // 30 June 2000  === > ["30"] ["June"] ["1980"]
-        //WebElement dbirth = wd.findElement(By.id("dateOfBirthInput"));
-        WebElement dbirth = wd.findElement(By.cssSelector("#dateOfBirthInput"));
+    private void selectBDay(String birthday) { // 30 June 2000  === > ["30"] ["June"] ["2000"]
+        WebElement dbirth = wd.findElement(By.id("dateOfBirthInput"));
         dbirth.click();
-        //document.querySelector("#dateOfBirthInput")
-        //document.querySelector("div[aria-label='Choose Wednesday, December 24th, 1980']")
 
         String [] data =birthday.split(" ");
 
@@ -110,7 +102,7 @@ public class HelperStudentForm extends HelperBase{
         new Select(wd.findElement(By.cssSelector("select.react-datepicker__year-select"))).selectByValue(data[2]);
 
         //String locator = "//div[text()='30']";
-        // String locator = "//div[text()='"+"30"+"']";
+       // String locator = "//div[text()='"+"30"+"']";
         String locator = "//div[text()='"+data[0]+"']";
 
         String locator2 =String.format("//div[text()='%s']",data[0]);
@@ -131,7 +123,7 @@ public class HelperStudentForm extends HelperBase{
         WebElement dbirth = wd.findElement(By.id("dateOfBirthInput"));
         dbirth.click();
 
-        String nameOS =  System.getProperty("os.name");   // "Mac "
+       String nameOS =  System.getProperty("os.name");   // "Mac "
         System.out.printf(nameOS);
         if(nameOS.startsWith("Mac")){
             dbirth.sendKeys(Keys.chord(Keys.COMMAND,"a"));
@@ -151,5 +143,23 @@ public class HelperStudentForm extends HelperBase{
         }else if (gender.equals("Other")){
             click(By.cssSelector("label[for='gender-radio-3']"));
         }
+    }
+
+    public void uploadPhoto(String link) {
+        wd.findElement(By.id("uploadPicture")).sendKeys(link);
+
+    }
+
+    public void submitForm() {
+        click(By.id("submit"));
+    }
+
+    public void hideFooter() {
+        JavascriptExecutor js =(JavascriptExecutor) wd;
+        js.executeScript("document.querySelector('footer').style.display='none';");
+    }
+
+    public void close() {
+        click(By.id("closeLargeModal"));
     }
 }
