@@ -7,6 +7,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+//'C:\Users\YOUR_USER_NAME\AppData\Local\Google\Chrome\User Data\Default\Extensions'    win
+// /Users/YOUR_USER_NAME/Library/Application\ Support/Google/Chrome/Default/Extensions    mac
+//gighmmpiobklfepjocnamgkkbiglidom
 
 public class ApplicationManager {
 
